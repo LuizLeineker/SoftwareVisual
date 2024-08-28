@@ -1,0 +1,10 @@
+GET http://localhost:5108
+
+### Segunda Funcionalidade
+GET http://localhost:5108/user
+
+### Retornar Endereço
+GET http://localhost:5108/retornar
+
+###
+GET https://www.google.com/
