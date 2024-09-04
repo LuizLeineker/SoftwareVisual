@@ -1,10 +1,16 @@
 GET http://localhost:5108
 
-### Segunda Funcionalidade
+### User
 GET http://localhost:5108/user
 
 ### Retornar Endereço
 GET http://localhost:5108/retornar
 
-###
+### Google
 GET https://www.google.com/
+
+### Produtos
+GET http://localhost:5108/produto/list
+
+### Produtos
+POST http://localhost:5108/produto/cadastrar/pc
