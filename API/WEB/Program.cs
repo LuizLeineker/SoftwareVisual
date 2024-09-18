@@ -1,5 +1,6 @@
 //Testar API: Rest Client - Extensão do VSCODE, SOFTWARE: Postman, Insomnia
 using WEB.Models;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
@@ -18,7 +19,7 @@ app.MapGet("/retornar", () =>
     return endereco;
 });
 
-List<Produto> produtos =
+List<Produto> produtos = 
 [
     new Produto(){
         Nome = "Notebook",
@@ -39,15 +40,56 @@ List<Produto> produtos =
 
 //GET
 app.MapGet("/produto/list", () => {
-    return Results.Ok(produtos);
+    if(produtos.Count > 0){
+        return Results.Ok(produtos);
+    }
+
+    return Results.NotFound();
 });
 
-app.MapPost("/produto/cadastrar/{nome}", (string nome) => {
-    Produto produto = new Produto();
-    produto.Nome = nome;
-    produtos.Add(produto);
-    return Results.Ok(produtos);
+app.MapGet("/produto/buscar/{nome}", (string nome) => {
+    foreach(Produto produtoIndex in produtos){
+        if(produtoIndex.Nome == nome){
+            return Results.Ok(produtoIndex);
+        }
+    }
+    return Results.NotFound();
 });
+
+app.MapPost("/produto/cadastrar/", ([FromBody]Produto produto) => {
+    
+    
+    produtos.Add(produto);
+    return Results.Created("", produto);
+});
+
+app.MapGet("/produto/remove/{nome}", (string nome) => {
+    int i = 0;
+    foreach(Produto produtoIndex in produtos){
+        if(produtoIndex.Nome == nome){
+            produtos.RemoveAt(i);
+            return Results.Ok();
+        }
+        i++;
+    }
+    return Results.NotFound();
+});
+
+
+app.MapPost("/produto/update/{nome}", ([FromBody]Produto produto, string nome) => {
+    int i = 0;
+    foreach(Produto produtoIndex in produtos){
+        if(produtoIndex.Nome == nome){
+            produtos.RemoveAt(i);
+            produtos.Add(produto);
+            return Results.Created("", produto);
+        }
+        i++;
+    }
+    return Results.NotFound();
+    
+});
+
 
 //Criar um Funcionalidade para receber informação
 // Receber Informação pela URL da req

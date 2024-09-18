@@ -9,8 +9,34 @@ GET http://localhost:5108/retornar
 ### Google
 GET https://www.google.com/
 
+### Home
+GET http://localhost:5108/
+
 ### Produtos
 GET http://localhost:5108/produto/list
 
-### Produtos
-POST http://localhost:5108/produto/cadastrar/pc
+### Search
+GET http://localhost:5108/produto/buscar/nome
+
+### Create
+POST http://localhost:5108/produto/cadastrar
+Content-Type: application/json
+
+{
+    "nome" : "A320M-K",
+    "preco": 320.4,
+    "quantidade" : 14
+}
+
+### Remove
+GET http://localhost:5108/produto/remove/Batata
+
+### Create
+POST http://localhost:5108/produto/update/Computador
+Content-Type: application/json
+
+{
+    "nome" : "Ryzen 5 5600x",
+    "preco": 990.5,
+    "quantidade" : 39
+}
